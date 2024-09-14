@@ -33,9 +33,8 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<ItemResponse> createItem(@RequestBody ItemRequest request) {
-        Tarefa tarefa = tarefaService.getTaskById(request.getTarefaId());
-        ItemResponse itemResponse = itemService.create(request, tarefa);
-
+        Tarefa tarefa = tarefaService.getTaskByIdEntity(request.getTarefaId()); // Obtendo Tarefa diretamente
+        ItemResponse itemResponse = itemService.create(request, tarefa); // Criando o Item
         return ResponseEntity.ok(itemResponse);
     }
 

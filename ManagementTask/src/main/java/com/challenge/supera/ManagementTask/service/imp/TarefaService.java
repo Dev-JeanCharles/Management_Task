@@ -44,7 +44,14 @@ public class TarefaService implements com.challenge.supera.ManagementTask.servic
     public TarefaResponse getTaskById(String id) {
         Tarefa tarefa = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+
         return adapter.toResponse(tarefa);
+    }
+
+    @Override
+    public Tarefa getTaskByIdEntity(String id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
     }
 
     @Override

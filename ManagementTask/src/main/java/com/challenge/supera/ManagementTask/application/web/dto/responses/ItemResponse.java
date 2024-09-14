@@ -15,5 +15,5 @@ public class ItemResponse {
     private String descricao;
     private boolean concluido;
     private boolean destacado;
-    private String tarefaId;
+    private String tarefa;
 }

@@ -25,7 +25,7 @@ public class ItemAdapter {
                 .descricao(item.getDescricao())
                 .concluido(item.isConcluido())
                 .destacado(item.isDestacado())
-                .tarefaId(item.getTarefa().getId())
+                .tarefa(item.getTarefa().getId())
                 .build();
     }
 

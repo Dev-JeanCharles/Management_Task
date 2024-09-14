@@ -16,28 +16,27 @@ import java.util.stream.Collectors;
 public class ItemService implements com.challenge.supera.ManagementTask.service.interfaces.ItemService {
 
     private final ItemRepository repository;
-    private final ItemBuilder builder;
+    private final ItemBuilder builderItem;
     private final ItemAdapter adapter;
 
     public ItemService(ItemRepository repository, ItemBuilder builder, ItemAdapter adapter) {
         this.repository = repository;
-        this.builder = builder;
+        this.builderItem = builder;
         this.adapter = adapter;
     }
 
     @Override
     public ItemResponse create(ItemRequest request, Tarefa tarefa) {
-        Item newItem = builder.toItemEntity(request, tarefa);
+        Item newItem = builderItem.toItemEntity(request, tarefa);
         Item savedItem = repository.save(newItem);
-        return adapter.toResponse(savedItem);
 
+        return adapter.toResponse(savedItem);
     }
 
     @Override
     public List<ItemResponse> getItensByList(String taskId) {
-        List<Item> item = repository.findByTarefaId(taskId);
-
-        return item.stream()
+        List<Item> items = repository.findByTarefaId(taskId);
+        return items.stream()
                 .map(adapter::toResponse)
                 .collect(Collectors.toList());
     }
