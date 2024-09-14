@@ -36,9 +36,7 @@ public class ItemService implements com.challenge.supera.ManagementTask.service.
     @Override
     public List<ItemResponse> getItensByList(String listId) {
         List<Item> items = repository.findByListId(listId);
-        return items.stream()
-                .map(adapter::toResponse)
-                .collect(Collectors.toList());
+        return items.stream().map(adapter::toResponse).collect(Collectors.toList());
     }
 
     @Override
