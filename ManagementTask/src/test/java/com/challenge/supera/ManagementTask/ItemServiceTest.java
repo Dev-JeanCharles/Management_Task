@@ -9,6 +9,7 @@ import com.challenge.supera.ManagementTask.repository.postgres.interfaces.ItemRe
 import com.challenge.supera.ManagementTask.repository.postgres.interfaces.adapter.ItemAdapter;
 import com.challenge.supera.ManagementTask.service.imp.ItemService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -34,55 +35,75 @@ public class ItemServiceTest {
     private ItemService service;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void createShouldReturnItemResponse() {
-        ItemRequest request = new ItemRequest();
-        Tarefa tarefa = new Tarefa();
-        Item item = new Item();
-        ItemResponse itemResponse = new ItemResponse();
+    @Nested
+    class CreateTests {
 
-        when(builder.toItemEntity(any(ItemRequest.class), any(Tarefa.class))).thenReturn(item);
-        when(repository.save(any(Item.class))).thenReturn(item);
-        when(adapter.toResponse(any(Item.class))).thenReturn(itemResponse);
+        @Test
+        void createShouldReturnItemResponse() {
+            ItemRequest request = new ItemRequest();
+            Tarefa tarefa = new Tarefa();
+            Item item = createItem();
+            ItemResponse itemResponse = createItemResponse();
 
-        ItemResponse result = service.create(request, tarefa);
+            when(builder.toItemEntity(request, tarefa)).thenReturn(item);
+            when(repository.save(item)).thenReturn(item);
+            when(adapter.toResponse(item)).thenReturn(itemResponse);
 
-        assertNotNull(result);
-        verify(builder).toItemEntity(any(ItemRequest.class), any(Tarefa.class));
-        verify(repository).save(any(Item.class));
-        verify(adapter).toResponse(any(Item.class));
+            ItemResponse result = service.create(request, tarefa);
+
+            assertNotNull(result);
+            verify(builder).toItemEntity(request, tarefa);
+            verify(repository).save(item);
+            verify(adapter).toResponse(item);
+        }
     }
 
-    @Test
-    void updatedItemShouldReturnItemResponse() {
-        ItemRequest request = new ItemRequest();
-        Item item = new Item();
-        ItemResponse itemResponse = new ItemResponse();
+    @Nested
+    class UpdateTests {
 
-        when(repository.findById(anyString())).thenReturn(Optional.of(item));
-        doNothing().when(adapter).updateItemFromRequest(any(Item.class), any(ItemRequest.class));
-        when(repository.save(any(Item.class))).thenReturn(item);
-        when(adapter.toResponse(any(Item.class))).thenReturn(itemResponse);
+        @Test
+        void updatedItemShouldReturnItemResponse() {
+            ItemRequest request = new ItemRequest();
+            Item item = createItem();
+            ItemResponse itemResponse = createItemResponse();
 
-        ItemResponse result = service.updatedItem("id", request);
+            when(repository.findById("id")).thenReturn(Optional.of(item));
+            doNothing().when(adapter).updateItemFromRequest(item, request);
+            when(repository.save(item)).thenReturn(item);
+            when(adapter.toResponse(item)).thenReturn(itemResponse);
 
-        assertNotNull(result);
-        verify(repository).findById(anyString());
-        verify(adapter).updateItemFromRequest(any(Item.class), any(ItemRequest.class));
-        verify(repository).save(any(Item.class));
-        verify(adapter).toResponse(any(Item.class));
+            ItemResponse result = service.updatedItem("id", request);
+
+            assertNotNull(result);
+            verify(repository).findById("id");
+            verify(adapter).updateItemFromRequest(item, request);
+            verify(repository).save(item);
+            verify(adapter).toResponse(item);
+        }
     }
 
-    @Test
-    void removeItemShouldCallDeleteById() {
-        doNothing().when(repository).deleteById(anyString());
+    @Nested
+    class RemoveTests {
 
-        service.removeItem("id");
+        @Test
+        void removeItemShouldCallDeleteById() {
+            doNothing().when(repository).deleteById("id");
 
-        verify(repository).deleteById(anyString());
+            service.removeItem("id");
+
+            verify(repository).deleteById("id");
+        }
+    }
+
+    private Item createItem() {
+        return new Item();
+    }
+
+    private ItemResponse createItemResponse() {
+        return new ItemResponse();
     }
 }

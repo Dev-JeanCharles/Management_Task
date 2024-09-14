@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TarefaService implements com.challenge.supera.ManagementTask.service.interfaces.TarefaService {
@@ -37,7 +38,7 @@ public class TarefaService implements com.challenge.supera.ManagementTask.servic
         List<Tarefa> tarefas = repository.findAll();
         return tarefas.stream()
                 .map(adapter::toResponse)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
