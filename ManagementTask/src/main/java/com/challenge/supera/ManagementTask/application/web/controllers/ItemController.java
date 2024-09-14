@@ -2,9 +2,9 @@ package com.challenge.supera.ManagementTask.application.web.controllers;
 
 import com.challenge.supera.ManagementTask.application.web.dto.requesties.ItemRequest;
 import com.challenge.supera.ManagementTask.application.web.dto.responses.ItemResponse;
-import com.challenge.supera.ManagementTask.domain.model.Tarefa;
+import com.challenge.supera.ManagementTask.domain.model.Lista;
 import com.challenge.supera.ManagementTask.service.imp.ItemService;
-import com.challenge.supera.ManagementTask.service.imp.TarefaService;
+import com.challenge.supera.ManagementTask.service.imp.ListaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +16,15 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
-    private final TarefaService tarefaService;
+    private final ListaService listaService;
 
     @Autowired
-    public ItemController(ItemService service, TarefaService tarefaService) {
+    public ItemController(ItemService service, ListaService listaService) {
         this.itemService = service;
-        this.tarefaService = tarefaService;
+        this.listaService = listaService;
     }
 
-    @GetMapping("/task/{taskId}")
+    @GetMapping("/lista/{listaId}")
     public ResponseEntity<List<ItemResponse>> getItensByList(@PathVariable String taskId) {
         List<ItemResponse> response = itemService.getItensByList(taskId);
 
@@ -33,8 +33,8 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<ItemResponse> createItem(@RequestBody ItemRequest request) {
-        Tarefa tarefa = tarefaService.getTaskByIdEntity(request.getTarefaId()); // Obtendo Tarefa diretamente
-        ItemResponse itemResponse = itemService.create(request, tarefa); // Criando o Item
+        Lista lista = listaService.getListByIdEntity(request.getListaId());
+        ItemResponse itemResponse = itemService.create(request, lista);
         return ResponseEntity.ok(itemResponse);
     }
 

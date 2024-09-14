@@ -9,10 +9,10 @@ import java.util.Random;
 public class GeneratorIdImpl implements GeneratorId {
 
     @Override
-    public String generatedTarefaId() {
+    public String generatedListId() {
         Random random = new Random();
         int randomInt = 100 + random.nextInt(900);
-        return "TAREFA_" + randomInt;
+        return "LISTA_" + randomInt;
     }
 
     @Override

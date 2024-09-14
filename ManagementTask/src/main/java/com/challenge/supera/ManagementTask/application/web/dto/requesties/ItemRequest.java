@@ -8,5 +8,5 @@ public class ItemRequest {
     private String descricao;
     private boolean concluido;
     private boolean destacado;
-    private String tarefaId;
+    private String listaId;
 }

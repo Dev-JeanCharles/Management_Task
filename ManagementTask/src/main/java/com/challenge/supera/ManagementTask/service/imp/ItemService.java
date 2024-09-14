@@ -4,7 +4,7 @@ import com.challenge.supera.ManagementTask.application.web.builder.ItemBuilder;
 import com.challenge.supera.ManagementTask.application.web.dto.requesties.ItemRequest;
 import com.challenge.supera.ManagementTask.application.web.dto.responses.ItemResponse;
 import com.challenge.supera.ManagementTask.domain.model.Item;
-import com.challenge.supera.ManagementTask.domain.model.Tarefa;
+import com.challenge.supera.ManagementTask.domain.model.Lista;
 import com.challenge.supera.ManagementTask.repository.postgres.interfaces.ItemRepository;
 import com.challenge.supera.ManagementTask.repository.postgres.interfaces.adapter.ItemAdapter;
 import org.springframework.stereotype.Service;
@@ -26,16 +26,16 @@ public class ItemService implements com.challenge.supera.ManagementTask.service.
     }
 
     @Override
-    public ItemResponse create(ItemRequest request, Tarefa tarefa) {
-        Item newItem = builderItem.toItemEntity(request, tarefa);
+    public ItemResponse create(ItemRequest request, Lista lista) {
+        Item newItem = builderItem.toItemEntity(request, lista);
         Item savedItem = repository.save(newItem);
 
         return adapter.toResponse(savedItem);
     }
 
     @Override
-    public List<ItemResponse> getItensByList(String taskId) {
-        List<Item> items = repository.findByTarefaId(taskId);
+    public List<ItemResponse> getItensByList(String listId) {
+        List<Item> items = repository.findByListId(listId);
         return items.stream()
                 .map(adapter::toResponse)
                 .collect(Collectors.toList());

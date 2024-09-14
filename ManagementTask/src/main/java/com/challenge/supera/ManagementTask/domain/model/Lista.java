@@ -16,14 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tarefa {
+public class Lista {
     @Id
     @Column(name = "id")
     private String id = null;
 
     private String nome;
 
-    @OneToMany(mappedBy = "tarefa", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> itens = new ArrayList<>();
 
     @PrePersist
@@ -33,6 +33,6 @@ public class Tarefa {
 
     private String generatedTarefaId() {
         GeneratorId generator = new GeneratorIdImpl();
-        return generator.generatedTarefaId();
+        return generator.generatedListId();
     }
 }

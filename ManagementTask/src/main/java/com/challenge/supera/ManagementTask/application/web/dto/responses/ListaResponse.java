@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TarefaResponse {
+public class ListaResponse {
     private String id;
     private String nome;
     private List<ItemResponse> itens;

@@ -27,8 +27,8 @@ public class Item {
     private boolean destacado;
 
     @ManyToOne
-    @JoinColumn(name = "tarefa_id")
-    private Tarefa tarefa;
+    @JoinColumn(name = "lista_id")
+    private Lista lista;
 
     @PrePersist
     public void prePersist() {

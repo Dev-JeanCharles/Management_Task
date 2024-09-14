@@ -3,20 +3,10 @@ package com.challenge.supera.ManagementTask.repository.postgres.interfaces.adapt
 import com.challenge.supera.ManagementTask.application.web.dto.requesties.ItemRequest;
 import com.challenge.supera.ManagementTask.application.web.dto.responses.ItemResponse;
 import com.challenge.supera.ManagementTask.domain.model.Item;
-import com.challenge.supera.ManagementTask.domain.model.Tarefa;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ItemAdapter {
-    public Item toEntity(ItemRequest request, Tarefa tarefa) {
-        return Item.builder()
-                .titulo(request.getTitulo())
-                .descricao(request.getDescricao())
-                .concluido(request.isConcluido())
-                .destacado(request.isDestacado())
-                .tarefa(tarefa)
-                .build();
-    }
 
     public ItemResponse toResponse(Item item) {
         return ItemResponse.builder()
@@ -25,7 +15,7 @@ public class ItemAdapter {
                 .descricao(item.getDescricao())
                 .concluido(item.isConcluido())
                 .destacado(item.isDestacado())
-                .tarefa(item.getTarefa().getId())
+                .tarefa(item.getLista().getId())
                 .build();
     }
 

@@ -3,6 +3,6 @@ package com.challenge.supera.ManagementTask.application.web.dto.requesties;
 import lombok.Data;
 
 @Data
-public class TarefaRequest {
+public class ListaRequest {
     private String nome;
 }

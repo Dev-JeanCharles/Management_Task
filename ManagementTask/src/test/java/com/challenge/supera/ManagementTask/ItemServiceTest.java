@@ -4,7 +4,7 @@ import com.challenge.supera.ManagementTask.application.web.builder.ItemBuilder;
 import com.challenge.supera.ManagementTask.application.web.dto.requesties.ItemRequest;
 import com.challenge.supera.ManagementTask.application.web.dto.responses.ItemResponse;
 import com.challenge.supera.ManagementTask.domain.model.Item;
-import com.challenge.supera.ManagementTask.domain.model.Tarefa;
+import com.challenge.supera.ManagementTask.domain.model.Lista;
 import com.challenge.supera.ManagementTask.repository.postgres.interfaces.ItemRepository;
 import com.challenge.supera.ManagementTask.repository.postgres.interfaces.adapter.ItemAdapter;
 import com.challenge.supera.ManagementTask.service.imp.ItemService;
@@ -45,18 +45,18 @@ public class ItemServiceTest {
         @Test
         void createShouldReturnItemResponse() {
             ItemRequest request = new ItemRequest();
-            Tarefa tarefa = new Tarefa();
+            Lista lista = new Lista();
             Item item = createItem();
             ItemResponse itemResponse = createItemResponse();
 
-            when(builder.toItemEntity(request, tarefa)).thenReturn(item);
+            when(builder.toItemEntity(request, lista)).thenReturn(item);
             when(repository.save(item)).thenReturn(item);
             when(adapter.toResponse(item)).thenReturn(itemResponse);
 
-            ItemResponse result = service.create(request, tarefa);
+            ItemResponse result = service.create(request, lista);
 
             assertNotNull(result);
-            verify(builder).toItemEntity(request, tarefa);
+            verify(builder).toItemEntity(request, lista);
             verify(repository).save(item);
             verify(adapter).toResponse(item);
         }
