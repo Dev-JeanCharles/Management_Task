@@ -1,5 +1,7 @@
 package com.challenge.supera.ManagementTask.domain.model;
 
+import com.challenge.supera.ManagementTask.repository.postgres.interfaces.GeneratorId;
+import com.challenge.supera.ManagementTask.repository.postgres.interfaces.imp.GeneratorIdImpl;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -16,11 +17,21 @@ import java.util.List;
 @Builder
 public class Tarefa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private String id = null;
 
     private String nome;
 
-    @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tarefa", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> itens;
+
+    @PrePersist
+    public void prePersist() {
+        this.id = generatedTarefaId();
+    }
+
+    private String generatedTarefaId() {
+        GeneratorId generator = new GeneratorIdImpl();
+        return generator.generatedTarefaId();
+    }
 }

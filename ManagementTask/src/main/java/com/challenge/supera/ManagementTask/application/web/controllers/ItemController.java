@@ -2,14 +2,12 @@ package com.challenge.supera.ManagementTask.application.web.controllers;
 
 import com.challenge.supera.ManagementTask.domain.model.Item;
 import com.challenge.supera.ManagementTask.service.imp.ItemService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/itens")
 public class ItemController {
@@ -21,9 +19,27 @@ public class ItemController {
         this.service = service;
     }
 
+    @GetMapping("/task/{taskId}")
+    public Optional<Item> getItensByList(@PathVariable String taskId) {
+        return service.getItensByList(taskId);
+    }
+
     @PostMapping
     public Item createItem(@RequestBody Item item) {
-        log.info("[CREATE-TAREFA]-[Controller] Iniciando a criação do item: [{}]", item);
         return service.create(item);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Item> updatedItem(@PathVariable String id, @RequestBody Item newItem) {
+        Item item = service.updatedItem(id, newItem);
+
+        return ResponseEntity.ok(item);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Item> removeItem(@PathVariable String id) {
+        service.removeItem(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

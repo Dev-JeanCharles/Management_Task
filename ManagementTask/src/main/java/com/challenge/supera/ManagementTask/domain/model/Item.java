@@ -1,5 +1,7 @@
 package com.challenge.supera.ManagementTask.domain.model;
 
+import com.challenge.supera.ManagementTask.repository.postgres.interfaces.GeneratorId;
+import com.challenge.supera.ManagementTask.repository.postgres.interfaces.imp.GeneratorIdImpl;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private String id = null;
 
     private String titulo;
 
@@ -28,4 +30,13 @@ public class Item {
     @JoinColumn(name = "tarefa_id")
     private Tarefa tarefa;
 
+    @PrePersist
+    public void prePersist() {
+        this.id = generatedItemId();
+    }
+
+    private String generatedItemId() {
+        GeneratorId generator = new GeneratorIdImpl();
+        return generator.generatedItemId();
+    }
 }
