@@ -3,6 +3,7 @@ package com.challenge.supera.ManagementTask.application.web.controllers;
 import com.challenge.supera.ManagementTask.application.web.dto.requesties.ListaRequest;
 import com.challenge.supera.ManagementTask.application.web.dto.responses.ListaResponse;
 import com.challenge.supera.ManagementTask.service.interfaces.ListaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class ListaController {
     }
 
     @PostMapping
-    public ResponseEntity<ListaResponse> createList(@RequestBody ListaRequest request) {
+    public ResponseEntity<ListaResponse> createList(@Valid @RequestBody ListaRequest request) {
         ListaResponse listaResponse = service.createList(request);
 
         return ResponseEntity.ok(listaResponse);
