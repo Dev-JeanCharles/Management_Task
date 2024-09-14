@@ -1,12 +1,13 @@
 package com.challenge.supera.ManagementTask.service.interfaces;
 
-import com.challenge.supera.ManagementTask.domain.model.Tarefa;
+import com.challenge.supera.ManagementTask.application.web.dto.requesties.TarefaRequest;
+import com.challenge.supera.ManagementTask.application.web.dto.responses.TarefaResponse;
 
 import java.util.List;
 
 public interface TarefaService {
-    Tarefa create(Tarefa tarefa);
-    List<Tarefa> getAllTasks();
-    Tarefa getTaskById(String id);
+    TarefaResponse create(TarefaRequest request);
+    List<TarefaResponse> getAllTasks();
+    TarefaResponse getTaskById(String id);
     void removeTask(String id);
 }

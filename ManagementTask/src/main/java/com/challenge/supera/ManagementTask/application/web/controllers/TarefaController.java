@@ -1,10 +1,10 @@
 package com.challenge.supera.ManagementTask.application.web.controllers;
 
-import com.challenge.supera.ManagementTask.domain.model.Tarefa;
+import com.challenge.supera.ManagementTask.application.web.dto.requesties.TarefaRequest;
+import com.challenge.supera.ManagementTask.application.web.dto.responses.TarefaResponse;
 import com.challenge.supera.ManagementTask.service.interfaces.TarefaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.config.Task;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,26 +21,30 @@ public class TarefaController {
     }
 
     @GetMapping
-    public List<Tarefa> getAllTasks() {
-        return service.getAllTasks();
+    public ResponseEntity<List<TarefaResponse>> getAllTasks() {
+        List<TarefaResponse> tarefas = service.getAllTasks();
+
+        return ResponseEntity.ok(tarefas);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tarefa> getTaskById(@PathVariable String id)  {
-        Tarefa tarefa = service.getTaskById(id);
+    public ResponseEntity<TarefaResponse> getTaskById(@PathVariable String id) {
+        TarefaResponse tarefa = service.getTaskById(id);
 
         return ResponseEntity.ok(tarefa);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Task> deleteTask(@PathVariable String id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable String id) {
         service.removeTask(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping
-    public Tarefa createTask(@RequestBody Tarefa tarefa) {
-        return service.create(tarefa);
+    public ResponseEntity<TarefaResponse> createTask(@RequestBody TarefaRequest request) {
+        TarefaResponse tarefaResponse = service.create(request);
+
+        return ResponseEntity.ok(tarefaResponse);
     }
 }
