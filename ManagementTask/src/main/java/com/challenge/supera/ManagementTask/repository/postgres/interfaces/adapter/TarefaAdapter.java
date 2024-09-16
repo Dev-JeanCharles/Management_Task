@@ -1,5 +1,7 @@
 package com.challenge.supera.ManagementTask.repository.postgres.interfaces.adapter;
 
+import com.challenge.supera.ManagementTask.application.web.builder.ItemBuilder;
+import com.challenge.supera.ManagementTask.application.web.dto.requesties.TarefaRequest;
 import com.challenge.supera.ManagementTask.application.web.dto.responses.ItemResponse;
 import com.challenge.supera.ManagementTask.application.web.dto.responses.TarefaResponse;
 import com.challenge.supera.ManagementTask.domain.model.Item;
